@@ -1,5 +1,4 @@
 const path = require('path');
-const morgan = require('morgan');
 const express = require('express');
 const { engine } = require('express-handlebars');
 const app = express();

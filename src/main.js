@@ -3,7 +3,7 @@ const express = require('express');
 const { engine } = require('express-handlebars');
 const app = express();
 const route = require('./routes/main');
-const port = 1000;
+const port = process.env.PORT || 3000;
 
 // Template engines
 app.engine('hbs', engine({ extname: '.hbs' }));

@@ -26,7 +26,6 @@ app.use(
 app.use(express.json());
 
 // HTTP logger
-//app.use(morgan('dev'));
 
 // Routes init
 route(app);

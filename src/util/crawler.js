@@ -43,12 +43,14 @@ async function initCsv(fileName) {
     });
 }
 
-async function addDataToSheet(data) {
-    await sheets.addRow(data);
+async function addDataToSheet(datas) {
+    for (data of datas) {
+        sheets.addRow(data);
+    }
 }
 
 
-async function getHref(link, htmlQuery) {
+function getHref(link, htmlQuery) {
     return rp(link)
         .then(function($) {
             var datas = $(htmlQuery);
@@ -60,7 +62,7 @@ async function getHref(link, htmlQuery) {
         });
 }
 
-async function getContent(link) {
+function getContent(link) {
     return rp(link)
         .then(function($) {
             var articleName = $(".article-details header h2").text().trim();
@@ -76,7 +78,6 @@ async function getContent(link) {
                 'releaseDate': date,
                 'collection': numberArticleName
             }
-            await addDataToSheet(article);
             console.log(article);
             return article;
         });
@@ -134,10 +135,10 @@ async function crawler(sourceURL) {
 
 async function run(sourceURL) {
     await initExcel();
-    var data = crawler(sourceURL);
-
+    var data = await crawler(sourceURL);
     await initCsv(fileName);
     // // Write to CSV
+    addDataToSheet(data);
     csvWriter.writeRecords(data).then(() => console.log('The CSV file was written successfully'));
     console.log(csvWriter);
     // // Write to excel workbook

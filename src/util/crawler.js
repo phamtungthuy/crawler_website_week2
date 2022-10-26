@@ -48,7 +48,7 @@ async function addDataToSheet(data) {
 }
 
 
-function getHref(link, htmlQuery) {
+async function getHref(link, htmlQuery) {
     return rp(link)
         .then(function($) {
             var datas = $(htmlQuery);
@@ -60,7 +60,7 @@ function getHref(link, htmlQuery) {
         });
 }
 
-function getContent(link) {
+async function getContent(link) {
     return rp(link)
         .then(function($) {
             var articleName = $(".article-details header h2").text().trim();
@@ -76,6 +76,7 @@ function getContent(link) {
                 'releaseDate': date,
                 'collection': numberArticleName
             }
+            await addDataToSheet(article);
             console.log(article);
             return article;
         });

@@ -89,7 +89,7 @@ async function crawler(sourceURL) {
                 transform: function(body) {
                     return cheerio.load(body);
                 }
-            }, "div.issue-summary div.media-body a.title")
+            }, "div.issue-summary > div.media-body:nth-child(1) > a.title:nth-child(1)")
         })
         .then((links) => {
             return Promise.all(links.map((link) => {
@@ -98,7 +98,7 @@ async function crawler(sourceURL) {
                         transform: function(body) {
                             return cheerio.load(body);
                         }
-                    }, "div.media-list div.article-summary div.media-body div.row div.col-md-10 a")
+                    }, "section > div.media-list > div.article-summary.media > div.media-body div:nth-child(1) > a:nth-child(1)")
                     .then((articleLinks) => {
                         return articleLinks;
                     })
